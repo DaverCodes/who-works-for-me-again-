@@ -1,16 +1,16 @@
 INSERT INTO department (id, name) VALUES
-  (1, 'Engineering'),
-  (2, 'Marketing'),
-  (3, 'Sales');
+  (1, 'Dogs with Jobs'),
+  (2, 'Pet Food'),
+  (3, 'Odor Judge');
 
 INSERT INTO role (id, title, salary, department_id) VALUES
-  (1, 'Software Engineer', 75000, 1),
-  (2, 'Senior Software Engineer', 95000, 1),
-  (3, 'Product Manager', 120000, 1),
-  (4, 'Marketing Coordinator', 45000, 2),
-  (5, 'Marketing Manager', 75000, 2),
-  (6, 'Sales Representative', 60000, 3),
-  (7, 'Sales Manager', 95000, 3);
+  (1, 'Dog who will eat anything', 75000, 1),
+  (2, 'Picky dogs', 95000, 1),
+  (3, 'Dog Manager', 120000, 1),
+  (4, 'Pet Food Engineer', 45000, 2),
+  (5, 'Senior Pet Food Engineer', 75000, 2),
+  (6, 'Odor Judge', 60000, 3),
+  (7, 'Odor Judge Manager and Representative', 95000, 3);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES
   (1, 'Alley', 'Gator', 1, 'I AM THE MANAGER'),
