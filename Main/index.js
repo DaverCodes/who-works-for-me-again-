@@ -1,13 +1,7 @@
-// const express = require('express');
 const inquirer = require("inquirer");
 const mysql = require('mysql2');
 const cTable = require('console.table');
-const PORT = process.env.PORT || 3001;
-// const app = express();
 
-// Express middleware 
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
@@ -16,12 +10,40 @@ const db = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // TODO: Add MySQL password here
-    password: '',
+    password: 'Wh@tTh3C@t',
     database: 'employee_db'
   },
   console.log(`Connected to the employee_db database.`)
 );
 
+function promptUser() {
+  inquirer 
+  .prompt([{
+    type: "list",
+    name: "company",
+    message: "what would you like to do? (use arrow keys)",
+    choices: [
+     {name:" View All Employees" , value: "VIEW_ALL_EMPLOYEES"}
+    ]
+}])
+
+  .then((answers) => {
+    console.log(answers);
+    if (answers.company) {
+      
+    }
+    // Use user feedback for... whatever!!
+  })
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else went wrong
+    }
+  });
+}
+
+promptUser() 
 
 //FIRST INQUIERER SCREEN
 // Prompt Header 
@@ -110,5 +132,6 @@ const db = mysql.createConnection(
   
 
   
+
 
 
