@@ -23,65 +23,57 @@ function promptUser() {
     name: "company",
     message: "what would you like to do? (use arrow keys)",
     choices: [
-     {name:" View All Employees" , value: "VIEW_ALL_EMPLOYEES"}
+     {name:"View All Employees" , value: "VIEW_ALL_EMPLOYEES"},
+     {name:"Add Employees" , value: "ADD_EMPLOYEES"},
+     {name:"Update Employee Role" , value: "UPDATE_EMPLOYEE_ROLE"},
+     {name:"View All Roles" , value: "VIEW_ALL_ROLES"},
+     {name:"Add Role" , value: "ADD_ROLE"},
+     {name:"View All Departments" , value: "VIEW_ALL_DEPARTMENTS"},
+     {name:"Add Department" , value: "ADD_DEPARTMENT"},
+     {name:"Quit" , value: "QUIT"}
     ]
 }])
 
-  .then((answers) => {
-    console.log(answers);
-    if (answers.company) {
-      
-    }
-    // Use user feedback for... whatever!!
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
-    } else {
-      // Something else went wrong
-    }
-  });
+.then((answers) => {
+  console.log(answers);
+  // Switch case to handle different options
+  switch (answers.company) {
+    case "VIEW_ALL_EMPLOYEES":
+      viewAllEmployees();
+      break;
+    case "ADD_EMPLOYEES":
+      addEmployee();
+      break;
+    case "UPDATE_EMPLOYEE_ROLE":
+      updateEmployeeRole();
+      break;
+    case "VIEW_ALL_ROLES":
+      viewAllRoles();
+      break;
+    case "ADD_ROLE":
+      addRole();
+      break;
+    case "VIEW_ALL_DEPARTMENTS":
+      viewAllDepartments();
+      break;
+    case "ADD_DEPARTMENT":
+      addDepartment();
+      break;
+    case "QUIT":
+      console.log("Goodbye!");
+      db.end();
+      break;
+    default:
+      console.log("Invalid option");
+      promptUser();
+  }
+})
+.catch((error) => {
+  console.log(error);
+});
 }
+promptUser();
 
-promptUser() 
-
-//FIRST INQUIERER SCREEN
-// Prompt Header 
-// what would you like to do? (use arrow keys)
-//   an inquierer header to a scrollable list that shows 7 options at a time
-
-
-// option 1
-// View All Employees
-//   shows you the employee table 
-
-// option 2
-// Add Employees
-//   adds an employee to the table
-
-// option 3
-// Update Employee Role 
-//   changes the role_id of an existing employee
-
-// option 4
-// View All Roles 
-//   brings you to the role table
-
-// option 5
-// Add Role 
-//   add a role to the role table 
-
-// option 6
-// View All Departements 
-//   brings you to the department table SELECT * FROM department;
-
-// option 7
-// Add Department 
-//   add a department to the department table
-
-// option 8
-// Quit
-//   exit inquirer
 
 //SECOND INQUIRER SCREEN
 
