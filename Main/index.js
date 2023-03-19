@@ -74,68 +74,93 @@ function promptUser() {
 }
 promptUser();
 
-//PSEUDO CODE TO COMPLETE ___________________
+function viewAllEmployees() {
+  const query = "SELECT * FROM employee";
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+}
 
-//SECOND INQUIRER SCREEN
-
-// option 1 
-//   SHOW TABLE employee
-
-
-// addEmployee();
-//   What is the employees first name?
-//     insert text response into first_name
-
-//   What is the employees last name?
-//     insert text response into first_name
-
-//   What is their role?
-//     show a list of all the role possibilities
-//       have the user clicked role add the role id to the employee key 
-
-//    What is their salary?
-//      user puts in a number over 5 digits and no more than 6 digits
-
-//   compile user response into a new employee with an auto generated id
-
-// updateEmployeeRole();
-//   Which employee are you changing the role of?
-//     show a scrollable list of all employees 
-
-//   What role would you like to give to this employee? 
-//     show a scrollable list of available roles
-
-//   update chosen employee's role_id
-
-// viewAllRoles();
-//   SHOW TABLE role
-
-// addRole();
-//   What role would you like to add?
-//     user text response creates title 
-
-//   Choose the departemnt this role exists in.
-//     show a list of departements
-
-//   Is this a Manager position? Y or N 
-//     update manager_id accordingly
+function addEmployee() {
+  //   What is the employee's first name?
+  //     insert text response into first_name
   
-// compile user response
+  //   What is the employee's last name?
+  //     insert text response into last_name
+  
+  //   What is their role?
+  //     show a list of all the role possibilities
+  //     have the user click on a role and add the role id to the employee record
+  
+  //    What is their salary?
+  //      user puts in a number over 5 digits and no more than 6 digits
+  
+  //   compile user response into a new employee with an auto generated id
+  
+};
 
-// viewAllDepartments();
-//   SHOW TABLES department
+
+function updateEmployeeRole(){
+  //   Which employee are you changing the role of?
+  //     show a scrollable list of all employees 
+  
+  //   What role would you like to give to this employee? 
+  //     show a scrollable list of available roles
+  
+  //   update the chosen employee's role_id
+
+}
+
+function viewAllRoles() {
+  const query = "SELECT * FROM role";
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+}
+
+function addRole() {
+
+  //   What role would you like to add?
+  //     user text response creates title 
+  
+  //   Choose the department this role exists in.
+  //     show a list of departments
+  
+  //   Is this a Manager position? Y or N 
+  //     update manager_id accordingly
+    
+  // compile user response
+}
 
 
-// addDepartment();
-//   "What is the name of the department you want to add"
-//     user adds a text response and it adds to the following schema 
-//     TABLE department (
-//       id INT PRIMARY KEY,
-//       name VARCHAR(30)
-//     );
-//       iwith the folloing seed.sql info 
-//       INSERT INTO department (id, name) VALUES
-      
+function viewAllDepartments() {
+  const query = "SELECT * FROM department";
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+}
+
+function addDepartment(){
+  //   What is the name of the department you want to add?
+  //     user adds a text response and it is added to the following schema 
+  //     TABLE department (
+  //       id INT PRIMARY KEY,
+  //       name VARCHAR(30)
+  //     );
+  //   Use the following seed.sql info:
+  //   INSERT INTO department (id, name) VALUES
+  //    use auto increment on the id
+
+}
+
+
+// Quit the application
 
 // ___________________
 
