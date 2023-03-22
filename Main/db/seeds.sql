@@ -24,38 +24,3 @@ INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES
   (9, 'Paige', 'Turner', 7, 6),
   (10, 'Ben', 'Odrell', 7, 6);
 
-
-
-  {
-    type: "input",
-    name: "first_name",
-    message: "What is the employee's first name?"
-  },
-  {
-    type: "input",
-    name: "last_name",
-    message: "What is the employee's last name?"
-  },
-  {
-    type: "list",
-    name: "role_id",
-    message: "What is their role?",
-    choices: [/* list of available roles */]
-  },
-  {
-    type: "input",
-    name: "salary",
-    message: "What is their salary?"
-  }
-])
-  .then((answers) => {
-    const query = `INSERT INTO employee (first_name, last_name, role_id, salary) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role_id}, ${answers.salary})`;
-    db.query(query, (err, res) => {
-      if (err) throw err;
-      console.log("Employee added successfully!");
-      promptUser();
-    });
-  })
-  .catch((error) => {
-    console.log(error);
-  });

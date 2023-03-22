@@ -7,9 +7,7 @@ const cTable = require('console.table');
 const db = mysql.createConnection(
   {
     host: 'localhost',
-    // MySQL username,
     user: 'root',
-    // TODO: Add MySQL password here
     password: 'Wh@tTh3C@t',
     database: 'employee_db'
   },
@@ -36,7 +34,6 @@ function promptUser() {
 
 .then((answers) => {
   console.log(answers);
-  // Switch case to handle different options
   switch (answers.company) {
     case "VIEW_ALL_EMPLOYEES":
       viewAllEmployees();
@@ -121,8 +118,6 @@ inquirer.prompt([
 };
 
 function updateEmployeeRole(){
-// Which employee are you changing the role of?
-// show a scrollable list of all employees 
   const query = "SELECT * FROM employee";
   db.query(query, (err, results) => {
     if (err) throw err;
@@ -139,8 +134,6 @@ function updateEmployeeRole(){
     }
   ])
     .then((answers) => {
-      // What role would you like to give to this employee? 
-      // show a scrollable list of available roles
       const roleQuery = "SELECT * FROM role";
       db.query(roleQuery, (err, results) => {
         if (err) throw err;
@@ -157,7 +150,6 @@ function updateEmployeeRole(){
           }
         ])
         .then((answers) => {
-          // update the chosen employee's role_id
           const updateQuery = `UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${answers.employeeId}`;
           db.query(updateQuery, (err, res) => {
             if (err) throw err;
@@ -186,7 +178,6 @@ function viewAllRoles() {
 }
 
 function addRole() {
-  // First, prompt the user for information about the new role
   inquirer
     .prompt([
       {
@@ -204,14 +195,12 @@ function addRole() {
         name: "department",
         message: "Which department does this role belong to?",
         choices: () => {
-          // Query the database to get all the department names and IDs
           return new Promise((resolve, reject) => {
             const query = "SELECT * FROM department";
             db.query(query, (err, res) => {
               if (err) {
                 reject(err);
               } else {
-                // Map the department names and IDs to a format that inquirer can use
                 const choices = res.map((department) => ({
                   name: department.name,
                   value: department.id,
@@ -224,7 +213,6 @@ function addRole() {
       },
     ])
     .then((answers) => {
-      // Once the user has provided all the information, add the new role to the database
       const query = `INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`;
       db.query(query, (err, res) => {
         if (err) {
@@ -232,7 +220,6 @@ function addRole() {
         } else {
           console.log(`Added ${answers.title} to the database.`);
         }
-        // After the new role has been added, prompt the user again
         promptUser();
       });
     })
