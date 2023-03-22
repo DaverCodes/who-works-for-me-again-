@@ -13,7 +13,7 @@ const db = mysql.createConnection(
     password: 'Wh@tTh3C@t',
     database: 'employee_db'
   },
-  console.log(`Connected to the employee_db database.`)
+  console.log(`good job fucker you made it to the employee_db database.`)
 );
 
 function promptUser() {
@@ -84,33 +84,96 @@ function viewAllEmployees() {
 }
 
 function addEmployee() {
-  //   What is the employee's first name?
-  //     insert text response into first_name
-  
-  //   What is the employee's last name?
-  //     insert text response into last_name
-  
-  //   What is their role?
-  //     show a list of all the role possibilities
-  //     have the user click on a role and add the role id to the employee record
-  
-  //    What is their salary?
-  //      user puts in a number over 5 digits and no more than 6 digits
-  
-  //   compile user response into a new employee with an auto generated id
-  
+inquirer.prompt([
+  {
+    type: "input",
+    name: "first_name",
+    message: "What is the employee's first name?"
+  },
+  {
+    type: "input",
+    name: "last_name",
+    message: "What is the employee's last name?"
+  },
+  {
+    type: "list",
+    name: "role_id",
+    message: "What is their role?",
+    choices: [{name:"View All Roles" , value: "VIEW_ALL_ROLES"}]
+  },
+  {
+    type: "input",
+    name: "salary",
+    message: "What is their salary?"
+  }
+])
+  .then((answers) => {
+    const query = `INSERT INTO employee (first_name, last_name, role_id, salary) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role_id}, ${answers.salary})`;
+    db.query(query, (err, res) => {
+      if (err) throw err;
+      console.log("Employee added successfully!");
+      promptUser();
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 };
 
-
 function updateEmployeeRole(){
-  //   Which employee are you changing the role of?
-  //     show a scrollable list of all employees 
-  
-  //   What role would you like to give to this employee? 
-  //     show a scrollable list of available roles
-  
-  //   update the chosen employee's role_id
-
+// Which employee are you changing the role of?
+// show a scrollable list of all employees 
+  const query = "SELECT * FROM employee";
+  db.query(query, (err, results) => {
+    if (err) throw err;
+    const employees = results.map(employee => ({
+      name: `${employee.first_name} ${employee.last_name}`,
+      value: employee.id
+    }));
+  inquirer.prompt([
+    {
+      type: "list",
+      name: "employeeId",
+      message: "Which employee's role would you like to update?",
+      choices: employees
+    }
+  ])
+    .then((answers) => {
+      // What role would you like to give to this employee? 
+      // show a scrollable list of available roles
+      const roleQuery = "SELECT * FROM role";
+      db.query(roleQuery, (err, results) => {
+        if (err) throw err;
+        const roles = results.map(role => ({
+          name: role.title,
+          value: role.id
+        }));
+        inquirer.prompt([
+          {
+            type: "list",
+            name: "roleId",
+            message: "Which role would you like to assign to this employee?",
+            choices: roles
+          }
+        ])
+        .then((answers) => {
+          // update the chosen employee's role_id
+          const updateQuery = `UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${answers.employeeId}`;
+          db.query(updateQuery, (err, res) => {
+            if (err) throw err;
+            console.log("Employee role updated successfully!");
+            promptUser();
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  });
 }
 
 function viewAllRoles() {
@@ -123,19 +186,60 @@ function viewAllRoles() {
 }
 
 function addRole() {
-
-  //   What role would you like to add?
-  //     user text response creates title 
-  
-  //   Choose the department this role exists in.
-  //     show a list of departments
-  
-  //   Is this a Manager position? Y or N 
-  //     update manager_id accordingly
-    
-  // compile user response
-}
-
+  // First, prompt the user for information about the new role
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the title of the new role?",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "What is the salary for this role?",
+      },
+      {
+        type: "list",
+        name: "department",
+        message: "Which department does this role belong to?",
+        choices: () => {
+          // Query the database to get all the department names and IDs
+          return new Promise((resolve, reject) => {
+            const query = "SELECT * FROM department";
+            db.query(query, (err, res) => {
+              if (err) {
+                reject(err);
+              } else {
+                // Map the department names and IDs to a format that inquirer can use
+                const choices = res.map((department) => ({
+                  name: department.name,
+                  value: department.id,
+                }));
+                resolve(choices);
+              }
+            });
+          });
+        },
+      },
+    ])
+    .then((answers) => {
+      // Once the user has provided all the information, add the new role to the database
+      const query = `INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`;
+      db.query(query, (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(`Added ${answers.title} to the database.`);
+        }
+        // After the new role has been added, prompt the user again
+        promptUser();
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 function viewAllDepartments() {
   const query = "SELECT * FROM department";
@@ -146,31 +250,23 @@ function viewAllDepartments() {
   });
 }
 
-function addDepartment(){
-  //   What is the name of the department you want to add?
-  //     user adds a text response and it is added to the following schema 
-  //     TABLE department (
-  //       id INT PRIMARY KEY,
-  //       name VARCHAR(30)
-  //     );
-  //   Use the following seed.sql info:
-  //   INSERT INTO department (id, name) VALUES
-  //    use auto increment on the id
-
-}
-
-
-// Quit the application
-
-// ___________________
-
-
-
-
-
-  
-
-  
-
-
-
+function addDepartment() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "What is the name of the department you want to add?"
+    }
+  ])
+  .then((answers) => {
+    const query = `INSERT INTO department (name) VALUES ("${answers.name}")`;
+    db.query(query, (err, res) => {
+      if (err) throw err;
+      console.log("Department added successfully!");
+      promptUser();
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+};
