@@ -11,7 +11,7 @@ const db = mysql.createConnection(
     password: 'Wh@tTh3C@t',
     database: 'employee_db'
   },
-  console.log(`Congrats! You made it to the employee_db database.`)
+  console.log(`The Good Doggo Grub Galaxy database.`)
 );
 
 function promptUser() {
@@ -19,7 +19,7 @@ function promptUser() {
   .prompt([{
     type: "list",
     name: "company",
-    message: "what would you like to do? (use arrow keys)",
+    message: "what would you like to do?",
     choices: [
      {name:"View All Employees" , value: "VIEW_ALL_EMPLOYEES"},
      {name:"Add Employees" , value: "ADD_EMPLOYEES"},
@@ -96,16 +96,16 @@ inquirer.prompt([
     type: "list",
     name: "role_id",
     message: "What is their role?",
-    choices: [{name:"View All Roles" , value: "VIEW_ALL_ROLES"}]
+    choices: [{name:"View All Roles" , value: "SELECT * FROM role"}]
   },
-  {
-    type: "input",
-    name: "salary",
-    message: "What is their salary?"
-  }
+  // {
+  //   type: "input",
+  //   name: "salary",
+  //   message: "What is their salary?"
+  // }
 ])
   .then((answers) => {
-    const query = `INSERT INTO employee (first_name, last_name, role_id, salary) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role_id}, ${answers.salary})`;
+    const query = `INSERT INTO employee (first_name, last_name, role_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role_id})`;
     db.query(query, (err, res) => {
       if (err) throw err;
       console.log("Employee added successfully!");
