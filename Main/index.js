@@ -11,7 +11,7 @@ const db = mysql.createConnection(
     password: 'Wh@tTh3C@t',
     database: 'employee_db'
   },
-  console.log(`good job fucker you made it to the employee_db database.`)
+  console.log(`Congrats! You made it to the employee_db database.`)
 );
 
 function promptUser() {
