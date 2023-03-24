@@ -64,7 +64,15 @@ Prompts the user to enter the new department's name.
 Ends the application.
 
 
-## video representations of usage 
+## Video Representations of Usage 
+
+### viewing tables
+[tables video](https://drive.google.com/file/d/19WAOjJhPPuhSltut75sVqhMfw-Nm5Th2/view?usp=sharing)
+
+
+## Future Development
+currently the query is incomplete and I hope to come back and finish it 
+
 
 ## License
 This application is licensed under the MIT license.
