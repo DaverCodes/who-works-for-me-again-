@@ -72,6 +72,7 @@ Ends the application.
 
 ## Future Development
 currently the query is incomplete and I hope to come back and finish it 
+cannot currently add to the database
 
 
 ## License
