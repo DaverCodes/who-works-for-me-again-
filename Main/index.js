@@ -96,8 +96,16 @@ inquirer.prompt([
     type: "list",
     name: "role_id",
     message: "What is their role?",
-    choices: [{name:"View All Roles" , value: "SELECT * FROM role"}]
-  },
+    choices: [
+      {name: "Dog who will eat anything", value: "dog_eater"},
+      {name: "Picky dogs", value: "picky_dogs"},
+      {name: "Dog Manager", value: "dog_manager"},
+      {name: "Pet Food Engineer", value: "food_engineer"},
+      {name: "Senior Pet Food Engineer", value: "senior_engineer"},
+      {name: "Odor Judge", value: "odor_judge"},
+      {name: "Odor Judge Manager", value: "odor_judge_manager"},
+      {name: "Representative", value: "representative"}
+]},
   {
     type: "input",
     name: "salary",
@@ -118,37 +126,62 @@ inquirer.prompt([
 };
 
 function updateEmployeeRole(){
-  const query = "SELECT * FROM employee";
-  db.query(query, (err, results) => {
-    if (err) throw err;
-    const employees = results.map(employee => ({
-      name: `${employee.first_name} ${employee.last_name}`,
-      value: employee.id
-    }));
   inquirer.prompt([
     {
+      type: "input",
+      name: "first_name",
+      message: "What is the employee's first name?"
+    },
+    {
+      type: "input",
+      name: "last_name",
+      message: "What is the employee's last name?"
+    },
+    {
       type: "list",
-      name: "employeeId",
-      message: "Which employee's role would you like to update?",
-      choices: [{name:"View All employees" , value: "SELECT * FROM employee"}]
-    }
-  ])
-    .then((answers) => {
-      const roleQuery = "SELECT * FROM role";
-      db.query(roleQuery, (err, results) => {
-        if (err) throw err;
-        const roles = results.map(role => ({
-          name: role.title,
-          value: role.id
-        }));
-        inquirer.prompt([
-          {
-            type: "list",
-            name: "roleId",
-            message: "Which role would you like to assign to this employee?",
-            choices: [{name:"View All Roles" , value: "SELECT * FROM role"}]
-          }
-        ])
+      name: "employee_id",
+      message: "which employee?",
+      choices: [
+        {name: "Alley Gator", value: "1"},
+        {name: "Barb Dwyer", value: "2"},
+        {name: "Bea Minor", value: "3"},
+        {name: "Dee Sember", value: "4"},
+        {name: "Drew Champman", value: "5"},
+        {name: "Justin Thyme", value: "6"},
+        {name: "Noah Fence", value: "7"},
+        {name: "Holly McRell", value: "8"},
+        {name: "Paige Turner", value: "9"},
+        {name: "Ben Odrell", value: "10"},]
+    },
+    {type: "list",
+    name: "role_id",
+    message: "what is their new role?",
+    choices: [
+      {name: "Dog who will eat anything", value: "dog_eater"},
+      {name: "Picky dogs", value: "picky_dogs"},
+      {name: "Dog Manager", value: "dog_manager"},
+      {name: "Pet Food Engineer", value: "food_engineer"},
+      {name: "Senior Pet Food Engineer", value: "senior_engineer"},
+      {name: "Odor Judge", value: "odor_judge"},
+      {name: "Odor Judge Manager", value: "odor_judge_manager"},
+      {name: "Representative", value: "representative"}
+  ]}])
+      // .then((answers) => {
+      // const roleQuery = "SELECT * FROM role";
+      // db.query(roleQuery, (err, results) => {
+      //   if (err) throw err;
+      //   const roles = results.map(role => ({
+      //     name: role.title,
+      //     value: role.id
+      //   }));
+        // inquirer.prompt([
+        //   {
+        //     type: "list",
+        //     name: "roleId",
+        //     message: "Which role would you like to assign to this employee?",
+        //     choices: [{name:"View All Roles" , value: "SELECT * FROM role"}]
+        //   }
+        // ])
         .then((answers) => {
           const updateQuery = `UPDATE employee SET role_id = ${answers.roleId} WHERE id = ${answers.employeeId}`;
           db.query(updateQuery, (err, res) => {
@@ -160,13 +193,9 @@ function updateEmployeeRole(){
         .catch((error) => {
           console.log(error);
         });
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  });
-}
+      };
+     
+    
 
 function viewAllRoles() {
   const query = "SELECT * FROM role";
@@ -194,23 +223,11 @@ function addRole() {
         type: "list",
         name: "department",
         message: "Which department does this role belong to?",
-        choices: () => {
-          return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM department";
-            db.query(query, (err, res) => {
-              if (err) {
-                reject(err);
-              } else {
-                const choices = res.map((department) => ({
-                  name: department.name,
-                  value: department.id,
-                }));
-                resolve(choices);
-              }
-            });
-          });
-        },
-      },
+        choices:[
+          {name: "Dogs with Jobs", value: "Dogs with Jobs"},
+          {name: "Pet Food", value: "Pet Food"},
+          {name: "Odor Judge", value: "Odor Judge"}
+    ]},
     ])
     .then((answers) => {
       const query = `INSERT INTO role (title, department_id) VALUES ("${answers.title}", ${answers.department})`;
