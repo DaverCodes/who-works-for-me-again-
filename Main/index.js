@@ -98,14 +98,14 @@ inquirer.prompt([
     message: "What is their role?",
     choices: [{name:"View All Roles" , value: "SELECT * FROM role"}]
   },
-  // {
-  //   type: "input",
-  //   name: "salary",
-  //   message: "What is their salary?"
-  // }
+  {
+    type: "input",
+    name: "salary",
+    message: "What is their salary?"
+  }
 ])
   .then((answers) => {
-    const query = `INSERT INTO employee (first_name, last_name, role_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role_id})`;
+    const query = `INSERT INTO employee (first_name, last_name, role_id, salary) VALUES ("${answers.first_name}", "${answers.last_name}", "${answers.role_id})", "${answers.salary}"`;
     db.query(query, (err, res) => {
       if (err) throw err;
       console.log("Employee added successfully!");
@@ -130,7 +130,7 @@ function updateEmployeeRole(){
       type: "list",
       name: "employeeId",
       message: "Which employee's role would you like to update?",
-      choices: employees
+      choices: [{name:"View All employees" , value: "SELECT * FROM employee"}]
     }
   ])
     .then((answers) => {
@@ -146,7 +146,7 @@ function updateEmployeeRole(){
             type: "list",
             name: "roleId",
             message: "Which role would you like to assign to this employee?",
-            choices: roles
+            choices: [{name:"View All Roles" , value: "SELECT * FROM role"}]
           }
         ])
         .then((answers) => {
@@ -213,7 +213,7 @@ function addRole() {
       },
     ])
     .then((answers) => {
-      const query = `INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`;
+      const query = `INSERT INTO role (title, department_id) VALUES ("${answers.title}", ${answers.department})`;
       db.query(query, (err, res) => {
         if (err) {
           console.log(err);

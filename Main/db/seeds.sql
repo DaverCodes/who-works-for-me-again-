@@ -3,14 +3,14 @@ INSERT INTO department (id, name) VALUES
   (2, 'Pet Food'),
   (3, 'Odor Judge');
 
-INSERT INTO role (id, title, salary, department_id) VALUES
-  (1, 'Dog who will eat anything', 0, 1),
-  (2, 'Picky dogs', 0, 1),
-  (3, 'Dog Manager', 120000, 1),
-  (4, 'Pet Food Engineer', 45000, 2),
-  (5, 'Senior Pet Food Engineer', 75000, 2),
-  (6, 'Odor Judge', 60000, 3),
-  (7, 'Odor Judge Manager and Representative', 95000, 3);
+INSERT INTO role (id, title, department_id) VALUES
+  (1, 'Dog who will eat anything', 1),
+  (2, 'Picky dogs', 1),
+  (3, 'Dog Manager', 1),
+  (4, 'Pet Food Engineer', 2),
+  (5, 'Senior Pet Food Engineer', 2),
+  (6, 'Odor Judge', 3),
+  (7, 'Odor Judge Manager and Representative', 3);
 
 INSERT INTO employee (id, first_name, last_name, role_id, salary, manager_id) VALUES
   (1, 'Alley', 'Gator', 1, 0, null),

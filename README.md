@@ -67,7 +67,7 @@ Ends the application.
 ## Video Representations of Usage 
 
 ### viewing tables
-[tables video](https://drive.google.com/file/d/19WAOjJhPPuhSltut75sVqhMfw-Nm5Th2/view?usp=sharing)
+[tables video](https://drive.google.com/file/d/1KSKaa02uxd0rL9xi7oBFNhOm95lxoHyw/view)
 
 
 ## Future Development
